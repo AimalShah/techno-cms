@@ -15,10 +15,10 @@ export const users = pgTable("users", {
     username: text("username").notNull().unique(),
     email: text("email").notNull(),
     password: text("password").notNull(),
-    role: enumUserRole("role").notNull(),
-    createdAt: date("createdAt").notNull().defaultNow(),
-    lastLogin: date("last_login").notNull(),
-    isActive: boolean("isActive").notNull().default(true)
+    role: enumUserRole("role").default("student"),
+    createdAt: date("createdAt").defaultNow(),
+    lastLogin: date("last_login").defaultNow(),
+    isActive: boolean("isActive").default(true)
 });
 
 
