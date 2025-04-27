@@ -1,6 +1,7 @@
 'use client'
 
 import { signup } from "@/actions/auth"
+import { redirect } from "next/navigation";
 import { useActionState } from "react"
 
 export default function SignupForm() {
@@ -34,7 +35,6 @@ export default function SignupForm() {
             )}
             <button type="submit" className="border p-4 mt-4">Sign Up</button><br />
             {state?.error && <p className="border mt-2 bg-red-400/90">{state.message}</p>}
-            {state?.success && <p className="border mt-2 bg-green-400/90">{state.message}</p>}
         </form>
     )
 }

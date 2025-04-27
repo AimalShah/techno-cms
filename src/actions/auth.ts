@@ -1,7 +1,9 @@
 "use server"
 
 import { SignupFormSchema, FormState } from "@/lib/definitions"
+import { createSession, deleteSession } from "@/lib/session";
 import bycrypt  from "bcrypt";
+import { redirect } from "next/navigation";
 
 export async function signup(statr: FormState, formData: FormData) {
     const validateFields = SignupFormSchema.safeParse({
@@ -32,7 +34,9 @@ export async function signup(statr: FormState, formData: FormData) {
 
         if(res.ok){
             const data = await res.json();
-            return { error : false , success : true , message : data.message};
+            console.log(data.userData.id)
+            await createSession(data.userData.id);
+            return redirect("/");
         }
 
         return {
@@ -44,4 +48,11 @@ export async function signup(statr: FormState, formData: FormData) {
         throw  e;
     }
 
+
+
+}
+
+export async function logout(){
+    deleteSession();
+    redirect("/login");
 }
