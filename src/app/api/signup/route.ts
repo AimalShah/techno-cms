@@ -1,5 +1,5 @@
-import { db } from "@/app/db";
-import { users } from "@/app/db/schema";
+
+import { createUser } from "@/app/db/queries/users/create";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -9,19 +9,9 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
-    console.log(body);
-
     
-    const data = await db
-        .insert(users)
-        .values({
-            username: body.name,
-            email: body.email,
-            password: body.password,
-        })
-        .returning({ id: users.id });
 
-    const user = data[0];
+    const user = await createUser(body);
 
     if (!user) {
         return NextResponse.json(

@@ -1,41 +1,34 @@
 import 'server-only'
 
-import {cookies} from "next/headers";
+import { cookies } from "next/headers";
 import { decrypt } from './session';
 import { cache } from 'react';
 import { redirect } from 'next/navigation';
-import { db } from '@/app/db';
-import { users } from '@/app/db/schema';
-import { eq } from 'drizzle-orm';
+import { getUserById } from '@/app/db/queries/users/get';
 
-export const verifySession =  cache(async () => {
+export const verifySession = cache(async () => {
     const cookie = (await cookies()).get('session')?.value
-    const session = await decrypt(cookie)
+    console.log('cookie : ', cookie);
+    const session = await decrypt(cookie);
+    console.log("Session : ", session)
 
-
-    if(!session?.userID) {
+    if (!session?.sessionId) {
         redirect('/login')
     }
 
-    return {isAuth: true, userID: session.userID}
+    return { isAuth: true, userId : session.userId}
 })
 
 export const getUser = cache(async () => {
     const session = await verifySession()
 
-    if(!session) return null
+    if (!session) return null
 
     try {
-        const data = await db.select({
-            username : users.id,
-            email : users.email,
-            role : users.role
-        }).from(users).where(eq(users.id, String(session.userID)));
-
-        const user = data[0]
+        const user = await getUserById(session.userId as string);
 
         return user
-    } catch(error) {
+    } catch (error) {
         console.log('Failed to fetch user')
         return null
     }

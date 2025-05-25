@@ -1,15 +1,18 @@
 "use server"
 
-import { SignupFormSchema, FormState } from "@/lib/definitions"
+import { SignupFormSchema, FormState, LoginFormState, LoginFormSchema } from "@/lib/definitions"
 import { createSession, deleteSession } from "@/lib/session";
 import bycrypt  from "bcrypt";
+import { error } from "console";
 import { redirect } from "next/navigation";
 
-export async function signup(statr: FormState, formData: FormData) {
+export async function signup(state: FormState, formData: FormData) {
     const validateFields = SignupFormSchema.safeParse({
         name: formData.get("name"),
         email: formData.get("email"),
-        password: formData.get("password")
+        password: formData.get("password"),
+        role : formData.get("role")
+        
     });
     
     if(!validateFields.success){
@@ -17,13 +20,14 @@ export async function signup(statr: FormState, formData: FormData) {
             errors : validateFields.error.flatten().fieldErrors
         }
     }
-    const {name , email, password} = validateFields.data;
+    const {name , email, password , role} = validateFields.data;
     const hashedPassword = await bycrypt.hash(password , 10);
 
     const reqData = {
-        name,
+        username : name,
         email,
-        password : hashedPassword
+        password : hashedPassword,
+        role
     }
 
     try {
@@ -34,7 +38,6 @@ export async function signup(statr: FormState, formData: FormData) {
 
         if(res.ok){
             const data = await res.json();
-            console.log(data.userData.id)
             await createSession(data.userData.id);
             return redirect("/");
         }
@@ -48,6 +51,50 @@ export async function signup(statr: FormState, formData: FormData) {
         throw  e;
     }
 
+
+
+}
+
+export async function login(state: LoginFormState, formData: FormData){
+    const validateField = LoginFormSchema.safeParse({
+        email: formData.get("email"),
+        password : formData.get("password"),
+    });
+
+    if(!validateField.success){
+        return {
+            errors : validateField.error.flatten().fieldErrors
+        }
+    }
+
+    const {email , password} = validateField.data;
+    const body =  {
+        email,
+        password
+    };
+
+    try{
+        const res = await fetch('http://localhost:3000/api/login' , {
+            method : 'POST',
+            body : JSON.stringify(body)
+        });
+
+        if(res.ok){
+            const data = await res.json();
+            await createSession(data.user);
+            redirect("/");
+        }
+        
+        const err = await res.json();
+
+        return {
+            error : true,
+            message : err.message
+        };
+
+    } catch(e){
+        throw e;
+    }
 
 
 }

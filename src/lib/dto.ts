@@ -7,10 +7,10 @@ import { users } from '@/app/db/schema';
 type User = {
     username : string;
     email : string;
-    role : "student" | "instructor" | "admin";
+    role : "student" | "instructor" | "admin" | null;
 }
 
-function canSeeUsername(viewer : User){
+function canSeeUsername(viewer : User | null){
     return true
 }
 
@@ -24,4 +24,14 @@ export async function getProfileDTO(slug: string){
     })
 
     const user = data[0]
+    const currentUser = await getUser();
+
+    if (!currentUser) {
+        throw new Error("Current user is not authenticated");
+    }
+
+    return {
+        username: canSeeUsername(currentUser) ? user.username : null,
+        email : canSeeEmail(currentUser)? user.email : null
+    }
 }

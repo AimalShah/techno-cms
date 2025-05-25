@@ -14,9 +14,14 @@ export const SignupFormSchema = z.object({
         .regex(/[^a-zA-Z0-9]/, {
             message: "Contain at least one special character."
         })
-        .trim()
+        .trim(),
+    role : z.enum(["admin","student","instructor"] , {message : "Invalide Role"}),
 });
 
+export const LoginFormSchema = z.object({
+    email: z.string().email({ message: "Please enter a valid email" }),
+    password: z.string().min(1 , "Password Should not be empty")
+})
 
 export type FormState =
     | {
@@ -29,3 +34,11 @@ export type FormState =
     }
     | undefined;
 
+export type LoginFormState =
+    | {
+        errors?: {
+            email?: string[]
+        }
+        message?: string
+    }
+    | undefined;

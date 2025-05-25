@@ -2,7 +2,7 @@ import { NextRequest , NextResponse } from "next/server";
 import { decrypt } from "@/lib/session";
 import { cookies } from "next/headers";
 
-const protectedRoutes = ['/student-dashboard'];
+const protectedRoutes = ['/dashboard'];
 const publicRoutes = ['/login', '/signup' , '/'];
 
 export default async function middleware(req: NextRequest){
@@ -15,7 +15,8 @@ export default async function middleware(req: NextRequest){
     const cookie = (await cookies()).get('session')?.value
     const session = await decrypt(cookie)
 
-    if(isProtecedRoute && !session?.userID){
+
+    if(isProtecedRoute && !session?.sessionId){
         return NextResponse.redirect(new URL('/login' , req.nextUrl))
     }
 
