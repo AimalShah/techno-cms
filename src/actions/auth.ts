@@ -56,7 +56,7 @@ export async function signup(state: FormState, formData: FormData) {
 const baseUrl =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : `https:${process.env.VERCEL_URL}`;
+    : `https://${process.env.VERCEL_URL || 'techno-cms.vercel.app/'}`;
 
 export async function login(state: LoginFormState, formData: FormData){
     const validateField = LoginFormSchema.safeParse({
