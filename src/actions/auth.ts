@@ -53,12 +53,18 @@ export async function signup(state: FormState, formData: FormData) {
 
 
 }
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : `https:${process.env.VERCEL_URL}`;
 
 export async function login(state: LoginFormState, formData: FormData){
     const validateField = LoginFormSchema.safeParse({
         email: formData.get("email"),
         password : formData.get("password"),
     });
+
+    console.log(baseUrl);
 
     if(!validateField.success){
         return {
@@ -73,7 +79,7 @@ export async function login(state: LoginFormState, formData: FormData){
     };
 
     try{
-        const res = await fetch('http://localhost:3000/api/login' , {
+        const res = await fetch(`${baseUrl}/api/login` , {
             method : 'POST',
             body : JSON.stringify(body)
         });
