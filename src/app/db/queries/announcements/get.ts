@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 import { db } from '../..';
 import { announcements } from '../../schema/announcements.schema';
 import { users } from '../../schema';
@@ -24,8 +24,23 @@ export async function getAnnouncementsWithPosterInfo() {
     content: announcements.content,
     postedAt: announcements.postedAt,
     posterUsername: users.username,
-    posterEmail: users.email,
+    posterRole : users.role
   })
   .from(announcements)
   .innerJoin(users, eq(announcements.postedByUserId, users.id));
+}
+
+export async function getRecentAnnouncementWithPosterInfo() {
+  return await db.select({
+    announcementId: announcements.announcementId,
+    title: announcements.title,
+    content: announcements.content,
+    postedAt: announcements.postedAt,
+    posterUsername: users.username,
+    posterRole: users.role,
+  })
+  .from(announcements)
+  .innerJoin(users, eq(announcements.postedByUserId, users.id))
+  .orderBy(desc(announcements.postedAt)) // Order by postedAt in descending order
+  .limit(4); // Limit to the 4 most recent announcements
 }

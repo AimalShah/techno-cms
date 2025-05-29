@@ -23,6 +23,11 @@ export const LoginFormSchema = z.object({
     password: z.string().min(1 , "Password Should not be empty")
 })
 
+export const AnnouncementFormSchema = z.object({
+    title : z.string().min(1, "Title Should not be empty"),
+    content : z.string().min(1, "Message Should not be empty")
+});
+
 export type FormState =
     | {
         errors?: {
@@ -42,3 +47,13 @@ export type LoginFormState =
         message?: string
     }
     | undefined;
+
+export type AnnouncementFormState = 
+    | {
+        errors? : {
+            title? : string[],
+            content : string[],
+        }
+        message?: string
+    }
+    |undefined;

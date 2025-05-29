@@ -4,7 +4,15 @@ import { users } from "../../schema";
 import { eq } from "drizzle-orm";
 
 export async function getAllUsers() {
-    return await db.select().from(users);
+    return await db.select({
+        id : users.id,
+        username : users.username,
+        email : users.email,
+        role : users.role,
+        createdAt : users.createdAt,
+        lastLogin : users.lastLogin,
+        isActive : users.isActive
+    }).from(users);
 }
 
 
@@ -18,6 +26,7 @@ export async function getUserById(id: string) {
  * @param username The username of the user.
  * @returns A promise that resolves to the user object, or undefined if not found.
  */
+
 export async function getUserByUsername(username: string) {
     const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
     return result[0];

@@ -48,3 +48,4 @@ export async function getAttendanceSummaryByEnrollmentId(enrollmentId: string) {
         excused: excused[0].count,
     };
 }
+

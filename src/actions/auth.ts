@@ -3,7 +3,6 @@
 import { SignupFormSchema, FormState, LoginFormState, LoginFormSchema } from "@/lib/definitions"
 import { createSession, deleteSession } from "@/lib/session";
 import bycrypt  from "bcrypt";
-import { error } from "console";
 import { redirect } from "next/navigation";
 
 export async function signup(state: FormState, formData: FormData) {
@@ -19,7 +18,7 @@ export async function signup(state: FormState, formData: FormData) {
         return {
             errors : validateFields.error.flatten().fieldErrors
         }
-    }
+    }        
     const {name , email, password , role} = validateFields.data;
     const hashedPassword = await bycrypt.hash(password , 10);
 
