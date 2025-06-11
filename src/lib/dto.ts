@@ -1,8 +1,8 @@
 import 'server-only'
 import {getUser} from '@/lib/dal'
-import { db } from '@/app/db';
+import { db } from '@/db';
 import { eq } from 'drizzle-orm';
-import { users } from '@/app/db/schema';
+import { users } from '@/db/schema';
 
 type User = {
     username : string;

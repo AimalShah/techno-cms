@@ -1,8 +1,8 @@
 import 'server-only'
 import {SignJWT, jwtVerify} from "jose";
 import { cookies } from 'next/headers';
-import { db } from '@/app/db';
-import { sessions } from '@/app/db/schema/sessions.schema';
+import { db } from '@/db';
+import { sessions } from '@/db/schema/sessions.schema';
 
 
 const secretKey = process.env.SESSION_SECRET;

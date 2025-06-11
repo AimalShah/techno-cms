@@ -1,10 +1,11 @@
 "use server";
 
-import { db } from "@/app/db";
-import { announcements } from "@/app/db/schema/announcements.schema";
+import { db } from "@/db";
+import { announcements } from "@/db/schema/announcements.schema";
 import { getUser, verifySession } from "@/lib/dal";
 import { AnnouncementFormSchema, AnnouncementFormState } from "@/lib/definitions";
 import { error } from "console";
+import { revalidatePath } from "next/cache";
 
 
 export async function createAnnouncement(state : any, formData : FormData ){
@@ -46,6 +47,7 @@ export async function createAnnouncement(state : any, formData : FormData ){
         }
     }
 
+    revalidatePath("/admin-dashboard/");
     return {
         error : false,
         success : true,

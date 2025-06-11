@@ -1,8 +1,11 @@
 "use server"
 
+import { db } from "@/db";
+import { users } from "@/db/schema";
 import { SignupFormSchema, FormState, LoginFormState, LoginFormSchema } from "@/lib/definitions"
 import { createSession, deleteSession } from "@/lib/session";
-import bycrypt  from "bcrypt";
+import bycrypt from "bcrypt";
+import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 export async function signup(state: FormState, formData: FormData) {
@@ -10,101 +13,105 @@ export async function signup(state: FormState, formData: FormData) {
         name: formData.get("name"),
         email: formData.get("email"),
         password: formData.get("password"),
-        role : formData.get("role")
-        
+        role: formData.get("role")
+
     });
-    
-    if(!validateFields.success){
+
+    if (!validateFields.success) {
         return {
-            errors : validateFields.error.flatten().fieldErrors
+            errors: validateFields.error.flatten().fieldErrors
         }
-    }        
-    const {name , email, password , role} = validateFields.data;
-    const hashedPassword = await bycrypt.hash(password , 10);
+    }
+    const { name, email, password, role } = validateFields.data;
+    const hashedPassword = await bycrypt.hash(password, 10);
 
     const reqData = {
-        username : name,
+        username: name,
         email,
-        password : hashedPassword,
+        password: hashedPassword,
         role
     }
 
     try {
-        const res = await fetch("http://localhost:3000/api/signup" , {
-            method : 'POST',
-            body : JSON.stringify(reqData),
+        const res = await fetch("http://localhost:3000/api/signup", {
+            method: 'POST',
+            body: JSON.stringify(reqData),
         });
 
-        if(res.ok){
+        if (res.ok) {
             const data = await res.json();
             await createSession(data.userData.id);
             return redirect("/");
         }
 
         return {
-            error : true,
-            success : false ,
-            message : 'An error occurd try again'
+            error: true,
+            success: false,
+            message: 'An error occurd try again'
         }
-    } catch(e){
-        throw  e;
+    } catch (e) {
+        throw e;
     }
 
 
 
 }
-const baseUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : `https://techno-cms.vercel.app/`;
 
-export async function login(state: LoginFormState, formData: FormData){
+
+export async function login(state: LoginFormState, formData: FormData) {
     const validateField = LoginFormSchema.safeParse({
         email: formData.get("email"),
-        password : formData.get("password"),
+        password: formData.get("password"),
     });
 
-    console.log(baseUrl);
-
-    if(!validateField.success){
+    if (!validateField.success) {
         return {
-            errors : validateField.error.flatten().fieldErrors
+            errors: validateField.error.flatten().fieldErrors
         }
     }
 
-    const {email , password} = validateField.data;
-    const body =  {
-        email,
-        password
-    };
+    const { email, password } = validateField.data;
 
-    try{
-        const res = await fetch(`${baseUrl}/api/login` , {
-            method : 'POST',
-            body : JSON.stringify(body)
+
+    try {
+        const user = await db.query.users.findFirst({
+            where: eq(users.email, email)
         });
 
-        if(res.ok){
-            const data = await res.json();
-            await createSession(data.user);
-            redirect("/");
+        if (!user) {
+            return {
+                error: true,
+                message: "Email not found"
+            };
         }
-        
-        const err = await res.json();
 
-        return {
-            error : true,
-            message : err.message
-        };
+        const isPasswordCorrect = await bycrypt.compare(password, user.password)
 
-    } catch(e){
+        if (!isPasswordCorrect) {
+            return {
+                error: true,
+                message: "Password is Incorrect"
+            };
+        }
+
+
+        await db.update(users).set({
+            lastLogin : new Date().toISOString(),
+        })
+        .where(eq(users.email , user.email))
+
+        await createSession(user.id);
+        redirect("/");
+
+
+    } catch (e) {
         throw e;
     }
 
 
 }
 
-export async function logout(){
+export async function logout() {
     deleteSession();
     redirect("/login");
 }

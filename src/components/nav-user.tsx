@@ -28,14 +28,15 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { logout } from "@/actions/auth"
+import SidebarLogoutBtn from "./sidebar-logout-btn"
+import { ThemeToggle } from "./theme-toggle"
 
 export function   NavUser({
   user,
 }: {
   user: {
-    username: string
-    email: string
+    username: string | undefined
+    email: string | undefined
     avatar: string
   }
 }) {
@@ -84,9 +85,12 @@ export function   NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => logout()}>
-              <IconLogout />
-              <button>Logout!</button>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="">
+              <ThemeToggle/>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator/>
+            <DropdownMenuItem >
+              <SidebarLogoutBtn/>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

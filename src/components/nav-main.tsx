@@ -1,6 +1,6 @@
 "use client"
 
-import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
+import { type Icon } from "@tabler/icons-react"
 import { redirect, usePathname } from "next/navigation"
 import {
   SidebarGroup,
@@ -9,6 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { iconMap } from "./app-sidebar"
 
 
 export function NavMain({
@@ -17,7 +18,7 @@ export function NavMain({
   items: {
     title: string
     url: string
-    icon?: Icon
+    icon: keyof typeof iconMap
   }[]
 }) {
 
@@ -29,14 +30,15 @@ export function NavMain({
         <SidebarMenu>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem className={pathname === item.url ? 'bg-primary text-secondary rounded-md' : ''} key={item.title}>
+          {items.map((item) => {
+            const Icon = iconMap[item.icon]
+            return (<SidebarMenuItem className={pathname === item.url ? 'bg-primary text-secondary rounded-md' : ''} key={item.title}>
               <SidebarMenuButton onClick={() => redirect(item.url)} tooltip={item.title}>
-                {item.icon && <item.icon />}
+                {item.icon && <Icon/>}
                 <span>{item.title}</span>
               </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+            </SidebarMenuItem>)
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

@@ -1,5 +1,5 @@
-import { db } from "@/app/db";
-import { users } from "@/app/db/schema";
+import { db } from "@/db";
+import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import bycrypt from "bcrypt";

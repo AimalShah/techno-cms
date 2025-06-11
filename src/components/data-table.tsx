@@ -32,7 +32,6 @@ import { Input } from "./ui/input";
 import { ArrowBigDownDash, ArrowDown, MoveLeft, MoveRight } from "lucide-react";
 
 import React from "react";
-import { Value } from "@radix-ui/react-select";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -122,7 +121,7 @@ export default function DataTable<TData, TValue>({
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
+                            <TableRow key={headerGroup.id} className="bg-muted/50">
                                 {headerGroup.headers.map((header) => (
                                     <TableHead key={header.id}>
                                         {

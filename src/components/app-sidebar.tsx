@@ -1,23 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  IconCamera,
-  IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconUsers,
-} from "@tabler/icons-react"
+
 
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
@@ -31,60 +15,57 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import {
+  IconDashboard,
+  IconChecklist,
+  IconChartBar,
+  IconFolder,
+  IconSettings,
+  IconUsers,
+  IconClipboard,
+  IconInnerShadowTop,
+} from '@tabler/icons-react';
 
-const data = {
-  user: {
-    username: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: IconDashboard,
-    },
-    {
-      title: "Students",
-      url: "/dashboard/students",
-      icon: IconUsers,
-    },
-    {
-      title: "Instructors",
-      url: "/dashboard/instructors",
-      icon: IconChartBar,
-    },
-    {
-      title: "Courses",
-      url: "/dashboard/courses",
-      icon: IconFolder,
-    },
-    {
-      title: "Enrollments",
-      url: "/dashboard/enrollments",
-      icon: IconUsers,
-    },
-  ],
-
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: IconSettings,
-    },
-  ],
-}
-
-
-type User = {
-  id: string;
-  username: string;
-  email: string;
-  role: "student" | "instructor" | "admin" | null;
+export const iconMap = {
+  dashboard: IconDashboard,
+  checklist: IconChecklist,
+  chart: IconChartBar,
+  folder: IconFolder,
+  settings: IconSettings,
+  users: IconUsers,
+  clipboard : IconClipboard,
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar> & { user : any}) {
-  
+
+export type SidebarDataProps = {
+  navMain: {
+    title: string;
+    url: string;
+    icon: keyof typeof iconMap;
+  }[];
+  navSecondary: {
+    title: string;
+    url: string;
+    icon: keyof typeof iconMap;
+  }[]
+}
+
+export type SidebarUserProps = {
+  username: string | undefined;
+  email: string | undefined;
+  avatar : string;
+};
+
+
+export function AppSidebar(
+  { ...props }:
+    React.ComponentProps<typeof Sidebar>
+    &
+    {
+      user: SidebarUserProps,
+      data: SidebarDataProps
+    }) {
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -103,8 +84,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar> & 
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={props.data.navMain} />
+        <NavSecondary items={props.data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={props.user} />

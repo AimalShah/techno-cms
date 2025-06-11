@@ -4,13 +4,11 @@ import { cookies } from "next/headers";
 import { decrypt } from './session';
 import { cache } from 'react';
 import { redirect } from 'next/navigation';
-import { getUserById } from '@/app/db/queries/users/get';
+import { getUserById } from '@/db/queries/users/get';
 
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get('session')?.value
-    console.log('cookie : ', cookie);
     const session = await decrypt(cookie);
-    console.log("Session : ", session)
 
     if (!session?.sessionId) {
         redirect('/login')

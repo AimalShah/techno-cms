@@ -1,5 +1,5 @@
 
-import { createUser } from "@/app/db/queries/users/create";
+import { createUser } from "@/db/queries/users/create";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
