@@ -2,10 +2,10 @@
 
 import * as React from "react"
 
-
 import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
+import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
+
 import {
   Sidebar,
   SidebarContent,
@@ -14,6 +14,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar"
 import {
   IconDashboard,
@@ -36,7 +37,6 @@ export const iconMap = {
   clipboard : IconClipboard,
 };
 
-
 export type SidebarDataProps = {
   navMain: {
     title: string;
@@ -57,17 +57,18 @@ export type SidebarUserProps = {
 };
 
 
+
+
 export function AppSidebar(
-  { ...props }:
-    React.ComponentProps<typeof Sidebar>
+  { ...props }: 
+  React.ComponentProps<typeof Sidebar>
     &
     {
       user: SidebarUserProps,
       data: SidebarDataProps
     }) {
-
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -85,11 +86,11 @@ export function AppSidebar(
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={props.data.navMain} />
-        <NavSecondary items={props.data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={props.user} />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   )
 }
