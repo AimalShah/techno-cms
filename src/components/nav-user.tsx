@@ -1,7 +1,11 @@
 "use client"
 
 import {
+  IconCreditCard,
   IconDotsVertical,
+  IconLogout,
+  IconNotification,
+  IconUserCircle,
 } from "@tabler/icons-react"
 
 import {
@@ -12,6 +16,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
