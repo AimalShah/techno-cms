@@ -10,7 +10,7 @@ export default async function Home() {
   }
 
   if(user?.role === "instructor"){
-    return redirect("/instructor-dashboard");
+    return redirect("/instrucor-dashboard");
   }
 
   if(user?.role === "student"){

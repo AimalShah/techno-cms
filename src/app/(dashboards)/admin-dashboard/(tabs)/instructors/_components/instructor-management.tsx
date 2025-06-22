@@ -4,10 +4,7 @@ import DataTable from "@/components/data-table";
 import InstructorForm from "./instructor-form"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { instructorColumns } from "@/components/column";
-import { instructors } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-type Instructor = InferSelectModel<typeof instructors>;
+import { Instructor } from "@/db/schema";
 
 export default function InstructorManagement({
     data,
