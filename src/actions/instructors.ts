@@ -2,16 +2,14 @@
 
 import { db } from "@/db";
 import { instructors, SchemaInstructorNew, SchemaInstructorEdit } from "@/db/schema";
-import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
 
 
 
 // Create Instructor
 export async function createInstructor(formData: FormData) {
-  const validatedFields = SchemaNewInstructor.safeParse({
+  const validatedFields = SchemaInstructorNew.safeParse({
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     email: formData.get("email"),

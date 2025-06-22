@@ -11,7 +11,16 @@ import { UserPlus } from "lucide-react"
 import { enrollStudent } from "@/actions/enrollments"
 import { getStudents } from "@/actions/students"
 import { getCourses } from "@/actions/courses"
-import { Student, Course } from "@/db/schema"
+import { students, courses, offeringCourses, instructors } from "@/db/schema";
+import { InferSelectModel } from "drizzle-orm";
+
+type Student = InferSelectModel<typeof students>;
+type Course = InferSelectModel<typeof courses>;
+type OfferingCourse = InferSelectModel<typeof offeringCourses> & {
+    courseName: string;
+    instructorFirstName: string;
+    instructorLastName: string;
+};
 
 export default function EnrollmentForm() {
     const [formData, setFormData] = useState({
