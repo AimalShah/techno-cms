@@ -5,10 +5,13 @@ import { courses, SchemaCourseNew, SchemaCourseEdit } from "@/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { z } from "zod";
+import { z } from "zod";
 
 // Create Course
 export async function createCourse(formData: FormData) {
-  const validatedFields = SchemaCourseNew.safeParse({
+  const validatedFields = SchemaNewCourse.safeParse({
     courseName: formData.get("courseName"),
     duration: parseInt(formData.get("duration") as string),
   });

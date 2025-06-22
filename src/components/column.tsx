@@ -24,33 +24,6 @@ export type Enrollments = {
     instructorLastName: string | null;
 }
 
-import { users, students, instructors, courses, exams } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-export type User = InferSelectModel<typeof users>;
-export type Student = InferSelectModel<typeof students>;
-export type Instructor = InferSelectModel<typeof instructors>;
-export type Course = InferSelectModel<typeof courses>;
-export type Exam = InferSelectModel<typeof exams>;
-
-import { users, students, instructors, courses, exams } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-export type User = InferSelectModel<typeof users>;
-export type Student = InferSelectModel<typeof students>;
-export type Instructor = InferSelectModel<typeof instructors>;
-export type Course = InferSelectModel<typeof courses>;
-export type Exam = InferSelectModel<typeof exams>;
-
-import { users, students, instructors, courses, exams } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-export type User = InferSelectModel<typeof users>;
-export type Student = InferSelectModel<typeof students>;
-export type Instructor = InferSelectModel<typeof instructors>;
-export type Course = InferSelectModel<typeof courses>;
-export type Exam = InferSelectModel<typeof exams>;
-
 export type Users = {
     id: string;
     username: string;
@@ -265,3 +238,142 @@ export const examColumns: ColumnDef<Exam>[] = [
     header: "Total Marks",
   },
 ];
+    {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected()) && "indeterminate"
+                }
+                onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false
+    },
+    {
+        accessorKey: "username",
+        filterFn: "includesString",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant={"ghost"}
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    Username
+                    <ArrowUpDown />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            return <div className="px-4">{row.getValue("username")}</div>
+        }
+    },
+    {
+        accessorKey: "email",
+        header: () => <div className=" font-semibold">email</div>,
+    },
+    {
+        accessorKey: "role",
+        header: () => <div className="text-left font-semibold">Role</div>,
+        cell: ({ row }) => {
+            const role: "admin" | "student" | "instructor" = row.getValue("role");
+
+            return (
+                <Badge className={`${getRoleBadgeColor(role)} flex items-center gap-1 w-fit`}>
+                    {getRoleIcon(role)}
+                    {role.charAt(0).toUpperCase() + role.slice(1)}
+                </Badge>
+            )
+
+        }
+    },
+    {
+        accessorKey: "createdAt",
+        header: () => <div className=" font-semibold">CreateAt</div>,
+    },
+    {
+        accessorKey: "lastLogin",
+        header: () => <div className=" font-semibold">Last Login</div>,
+    },
+    {
+        accessorKey: "isActive",
+        header: () => <div className=" font-semibold">IsActive</div>,
+        cell: ({ row }) => {
+            const status: boolean = row.getValue("isActive");
+
+            return (
+                <div className="flex items-center gap-2">
+                    {getStatusBadge(status)}
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-6 w-6 p-0"
+                    >
+                        {status === true ? (
+                            <UserX className="h-4 w-4 text-red-500" />
+                        ) : (
+                            <UserCheck className="h-4 w-4 text-green-500" />
+                        )}
+                    </Button>
+                </div>
+            )
+        },
+    },
+    {
+        id: "actions",
+        header: () => <div className="font-semibold">actions</div>,
+        cell: ({ row }) => {
+
+            const status = row.getValue("isActive");
+
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem className="flex items-center gap-2">
+                            <Edit className="h-4 w-4" />
+                            Edit User
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex items-center gap-2">
+                            <Mail className="h-4 w-4" />
+                            Send Email
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="flex items-center gap-2"
+                        >
+                            {status === true ? (
+                                <>
+                                    <UserX className="h-4 w-4" />
+                                    Deactivate
+                                </>
+                            ) : (
+                                <>
+                                    <UserCheck className="h-4 w-4" />
+                                    Activate
+                                </>
+                            )}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="flex items-center gap-2 text-red-600">
+                            <Trash2 className="h-4 w-4" />
+                            Delete User
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )
+        }
+    }
+]

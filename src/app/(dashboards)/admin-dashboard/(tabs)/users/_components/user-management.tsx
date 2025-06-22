@@ -4,11 +4,8 @@ import DataTable from "@/components/data-table";
 import AdminUserForm from "./admin-user-form"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { userColumns } from "@/components/column";
-import { users } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-type User = InferSelectModel<typeof users>;
-
+import { User } from "@/db/schema";
+import { Badge, Users as UserIcon, } from "lucide-react";
 
 export default function UserManagement({ data }: {
     data: User[]
