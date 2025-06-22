@@ -4,10 +4,7 @@ import DataTable from "@/components/data-table";
 import StudentForm from "./student-form"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { studentColumns } from "@/components/column";
-import { students } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-type Student = InferSelectModel<typeof students>;
+import { Student } from "@/db/schema";
 
 export default function StudentManagement({
     data,

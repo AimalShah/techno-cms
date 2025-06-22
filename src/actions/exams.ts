@@ -5,7 +5,9 @@ import { exams } from "@/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-
+import { z } from "zod";
+import { z } from "zod";
+import { z } from "zod";
 
 const examSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
@@ -36,7 +38,7 @@ export async function createExam(formData: FormData) {
   try {
     await db.insert(exams).values({
       title,
-      date: new Date(date),
+      date,
       totalMarks,
     });
   } catch (error) {
@@ -93,7 +95,7 @@ export async function updateExam(id: string, formData: FormData) {
   try {
     await db.update(exams).set({
       title,
-      date: new Date(date),
+      date,
       totalMarks,
     }).where(eq(exams.examId, id));
   } catch (error) {

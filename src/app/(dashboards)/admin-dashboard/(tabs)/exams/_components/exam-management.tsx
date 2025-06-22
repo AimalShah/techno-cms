@@ -4,10 +4,7 @@ import DataTable from "@/components/data-table";
 import ExamForm from "./exam-form"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { examColumns } from "@/components/column";
-import { exams } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-type Exam = InferSelectModel<typeof exams>;
+import { Exam } from "@/db/schema";
 
 export default function ExamManagement({
     data,
