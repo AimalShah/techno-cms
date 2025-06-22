@@ -1,46 +1,33 @@
 
-import {getEnrollmentsWithDetails } from "@/db/queries/enrollments/get";
-import { getOfferingCoursesWithDetails } from "@/db/queries/offeringCourses/get";
-import { getAllStudents } from "@/db/queries/students/get";
-import { enrllmentColumns } from "@/components/column";
-import DataTable from "@/components/data-table";
-import EnrollmentForm from "@/components/enrollments_form";
-import SkeletonCard from "@/components/loading-skeleton";
-import { Suspense } from "react";
-
-async function EnrollmentSection() {
-    const [students , courses] = await Promise.all([
-        getAllStudents(),
-        getOfferingCoursesWithDetails(),
-    ]);
-
-    return <EnrollmentForm students={students} courses={courses}/>
-}
-
-
-async function SearchSection() {
-    const data = await getEnrollmentsWithDetails();
-
-    return (
-        <div className="p-2 border rounded-lg">
-            <h1 className="text-4xl mb-6">Search Enrollments</h1>
-            <DataTable data={data} columns={enrllmentColumns} searchBy="studentFirstName"/>
-        </div>
-    )
-}
+import EnrollmentManagement from "./_components/enrollment-management";
+import { db } from "@/db";
+import { enrollments, students, offeringCourses, courses, instructors } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { Enrollments } from "@/components/column";
 
 export default async function Page(){
 
-    return(
-        <div className="px-8 py-4 space-y-4"> 
-           <Suspense fallback={<SkeletonCard/>}>
-            <EnrollmentSection/>
-           </Suspense>
+    const result = await db.select({
+        enrollmentId: enrollments.enrollmentID,
+        startDate: enrollments.startDate,
+        endDate: enrollments.endDate,
+        studentFirstName: students.firstName,
+        studentLastName: students.lastName,
+        courseName: courses.courseName,
+        instructorFirstName: instructors.firstName,
+        instructorLastName: instructors.lastName,
+    })
+    .from(enrollments)
+    .leftJoin(students, eq(enrollments.studentID, students.studentID))
+    .leftJoin(offeringCourses, eq(enrollments.offeringID, offeringCourses.offeringID))
+    .leftJoin(courses, eq(offeringCourses.courseID, courses.courseID))
+    .leftJoin(instructors, eq(offeringCourses.instructorID, instructors.instructorID));
 
-           <Suspense fallback={<SkeletonCard/>}>
-            <SearchSection/>
-           </Suspense>
-            
+    const data: Enrollments[] = Array.isArray(result) ? result : [];
+
+    return (
+        <div className="px-6 py-2 flex flex-col items-center space-y-2">
+            <EnrollmentManagement data={data}/>
         </div>
     )
 }

@@ -1,12 +1,12 @@
 export { sessions } from "./sessions.schema";
-export { users } from "./users.schema";
+export { users, SchemaNewUser, SchemaUserEdit } from "./users.schema";
 export { enrollments } from "./enrollments.schema";
-export { courses } from "./courses.schema";
+export { courses, SchemaCourseNew, SchemaCourseEdit } from "./courses.schema";
 export { examResults } from "./examResults.schema";
 export { exams } from "./exams.schema";
-export { instructors } from "./instructors.schema";
+export { instructors, SchemaInstructorNew, SchemaInstructorEdit } from "./instructors.schema";
 export { offeringCourses } from "./offering_courses.schema";
 export { results } from "./results.schema";
-export { students } from "./students.schema";
+export { students, SchemaStudentNew, SchemaStudentEdit } from "./students.schema";
 export { tests } from "./tests.schema";
 export { attendance} from "./attendance.schema";

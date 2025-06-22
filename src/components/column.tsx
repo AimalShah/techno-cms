@@ -17,11 +17,11 @@ export type Enrollments = {
     enrollmentId: string;
     startDate: string;
     endDate: string;
-    studentFirstName: string;
-    studentLastName: string;
-    courseName: string;
-    instructorFirstName: string;
-    instructorLastName: string;
+    studentFirstName: string | null;
+    studentLastName: string | null;
+    courseName: string | null;
+    instructorFirstName: string | null;
+    instructorLastName: string | null;
 }
 
 export type Users = {
@@ -132,7 +132,112 @@ export const enrllmentColumns: ColumnDef<Enrollments>[] = [
     }
 ];
 
-export const userColumns: ColumnDef<Users>[] = [
+export const userColumns: ColumnDef<User>[] = [
+  {
+    accessorKey: "username",
+    header: "Username",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Created At",
+  },
+  {
+    accessorKey: "lastLogin",
+    header: "Last Login",
+  },
+  {
+    accessorKey: "isActive",
+    header: "Active",
+  },
+];
+
+export const studentColumns: ColumnDef<Student>[] = [
+  {
+    accessorKey: "firstName",
+    header: "First Name",
+  },
+  {
+    accessorKey: "lastName",
+    header: "Last Name",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "rollNumber",
+    header: "Roll Number",
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
+    accessorKey: "address",
+    header: "Address",
+  },
+  {
+    accessorKey: "dateOfBirth",
+    header: "Date of Birth",
+  },
+];
+
+export const instructorColumns: ColumnDef<Instructor>[] = [
+  {
+    accessorKey: "firstName",
+    header: "First Name",
+  },
+  {
+    accessorKey: "lastName",
+    header: "Last Name",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
+    accessorKey: "address",
+    header: "Address",
+  },
+];
+
+export const courseColumns: ColumnDef<Course>[] = [
+  {
+    accessorKey: "courseName",
+    header: "Course Name",
+  },
+  {
+    accessorKey: "duration",
+    header: "Duration (hours)",
+  },
+];
+
+export const examColumns: ColumnDef<Exam>[] = [
+  {
+    accessorKey: "title",
+    header: "Title",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+  },
+  {
+    accessorKey: "totalMarks",
+    header: "Total Marks",
+  },
+];
     {
         id: "select",
         header: ({ table }) => (
