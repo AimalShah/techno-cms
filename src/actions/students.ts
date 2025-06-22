@@ -5,11 +5,9 @@ import { students, SchemaStudentNew, SchemaStudentEdit } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { z } from "zod";
-import { z } from "zod";
 
 // Create Student
-export async function createStudent(formData: FormData) {
+export async function createStudent(formData: FormData): Promise<{ message: string; errors?: any }> {
   const validatedFields = SchemaStudentNew.safeParse({
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
@@ -39,7 +37,7 @@ export async function createStudent(formData: FormData) {
       address,
       dateOfBirth,
     });
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error && error.message.includes("duplicate key value violates unique constraint")) {
       return {
         message: "Student with this email or roll number already exists.",
@@ -55,7 +53,7 @@ export async function createStudent(formData: FormData) {
 }
 
 // Get Students
-export async function getStudents() {
+export async function getStudents(): Promise<any[] | { message: string }> {
   try {
     const allStudents = await db.select().from(students);
     return allStudents;
@@ -67,7 +65,7 @@ export async function getStudents() {
 }
 
 // Get Student by ID
-export async function getStudentById(id: string) {
+export async function getStudentById(id: string): Promise<any | { message: string }> {
   try {
     const student = await db.select().from(students).where(eq(students.studentID, id)).limit(1);
     return student[0];
@@ -79,7 +77,7 @@ export async function getStudentById(id: string) {
 }
 
 // Update Student
-export async function updateStudent(id: string, formData: FormData) {
+export async function updateStudent(id: string, formData: FormData): Promise<{ message: string; errors?: any }> {
   const validatedFields = SchemaStudentEdit.safeParse({
     studentID: id,
     firstName: formData.get("firstName"),
@@ -110,7 +108,7 @@ export async function updateStudent(id: string, formData: FormData) {
       address,
       dateOfBirth,
     }).where(eq(students.studentID, id));
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error && error.message.includes("duplicate key value violates unique constraint")) {
       return {
         message: "Student with this email or roll number already exists.",
@@ -126,7 +124,7 @@ export async function updateStudent(id: string, formData: FormData) {
 }
 
 // Delete Student
-export async function deleteStudent(id: string) {
+export async function deleteStudent(id: string): Promise<{ message: string }> {
   try {
     await db.delete(students).where(eq(students.studentID, id));
   } catch (error) {
