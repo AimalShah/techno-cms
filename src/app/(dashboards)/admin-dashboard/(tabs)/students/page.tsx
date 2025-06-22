@@ -1,6 +1,9 @@
 import StudentManagement from "./_components/student-management";
 import { getStudents } from "@/actions/students";
-import { Student } from "@/db/schema";
+import { students } from "@/db/schema";
+import { InferSelectModel } from "drizzle-orm";
+
+type Student = InferSelectModel<typeof students>;
 
 export default async function Page(){
 

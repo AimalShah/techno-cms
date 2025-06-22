@@ -13,8 +13,7 @@ export async function signup(state: FormState, formData: FormData) {
         name: formData.get("name"),
         email: formData.get("email"),
         password: formData.get("password"),
-        role: formData.get("role")
-
+        role: formData.get("role"),
     });
 
     if (!validateFields.success) {
@@ -58,7 +57,7 @@ export async function signup(state: FormState, formData: FormData) {
 }
 
 
-export async function login(state: LoginFormState, formData: FormData) {
+export async function login(formData: FormData) {
     const validateField = LoginFormSchema.safeParse({
         email: formData.get("email"),
         password: formData.get("password"),
