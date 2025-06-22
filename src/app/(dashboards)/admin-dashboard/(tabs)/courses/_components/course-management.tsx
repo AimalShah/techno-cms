@@ -4,7 +4,10 @@ import DataTable from "@/components/data-table";
 import CourseForm from "./course-form"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { courseColumns } from "@/components/column";
-import { Course } from "@/db/schema";
+import { courses } from "@/db/schema";
+import { InferSelectModel } from "drizzle-orm";
+
+type Course = InferSelectModel<typeof courses>;
 
 export default function CourseManagement({
     data,

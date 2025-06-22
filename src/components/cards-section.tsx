@@ -1,4 +1,4 @@
-import { Book, GraduationCap, TrendingDownIcon, TrendingUpIcon, UserCheck, Users, UsersIcon } from "lucide-react"
+import { Book, GraduationCap, UserCheck, UsersIcon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import {
