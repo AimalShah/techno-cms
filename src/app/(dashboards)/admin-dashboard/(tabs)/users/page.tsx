@@ -1,13 +1,5 @@
 import UserManagement from "./_components/user-management";
 import { getUsers } from "@/actions/users";
-import { users } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-type User = InferSelectModel<typeof users>;
-import { users } from "@/db/schema";
-import { InferSelectModel } from "drizzle-orm";
-
-type User = InferSelectModel<typeof users>;
 
 export default async function Page(){
 

@@ -29,7 +29,7 @@ import {
 
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { ArrowDown, MoveLeft, MoveRight } from "lucide-react";
+import { ArrowBigDownDash, ArrowDown, MoveLeft, MoveRight } from "lucide-react";
 
 import React from "react";
 
