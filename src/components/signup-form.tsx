@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { AtSign, Lock, User, CheckCircle2 } from "lucide-react"
+import { AtSign, Lock, User } from "lucide-react"
 import { signup } from "@/actions/auth"
 
 export function SignupForm() {

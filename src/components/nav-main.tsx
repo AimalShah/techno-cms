@@ -1,7 +1,8 @@
 "use client"
 
-import { type Icon } from "@tabler/icons-react"
-import { redirect, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
+import { redirect } from "next/navigation";;
+import { redirect } from "next/navigation";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -33,7 +34,7 @@ export function NavMain({
           {items.map((item) => {
             const Icon = iconMap[item.icon]
             return (<SidebarMenuItem className={pathname === item.url ? 'bg-primary text-secondary rounded-md' : ''} key={item.title}>
-              <SidebarMenuButton onClick={() => redirect(item.url)} tooltip={item.title}>
+              <SidebarMenuButton onClick={() => router.push(item.url)} tooltip={item.title}>
                 {item.icon && <Icon/>}
                 <span>{item.title}</span>
               </SidebarMenuButton>
