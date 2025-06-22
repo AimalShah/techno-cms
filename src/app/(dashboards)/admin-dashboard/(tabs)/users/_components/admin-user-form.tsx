@@ -1,7 +1,5 @@
 "use client"
 
-"use client"
-
 import type React from "react"
 
 import { useState } from "react"
@@ -12,7 +10,6 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { UserPlus, Eye, EyeOff, Shield, GraduationCap, BookOpen } from "lucide-react"
-import { createUser } from "@/actions/users"
 
 export default function AdminUserForm() {
     const [showPassword, setShowPassword] = useState(false)
@@ -23,14 +20,9 @@ export default function AdminUserForm() {
         role: "",
     })
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        const form = e.currentTarget as HTMLFormElement;
-        const data = new FormData(form);
-        const result = await createUser(data);
-        if (result?.message) {
-            alert(result.message);
-        }
+        console.log("Creating user:", formData)
         setFormData({ username: "", email: "", password: "", role: "" })
     }
 
@@ -74,7 +66,6 @@ export default function AdminUserForm() {
                                 <Label htmlFor="username">Username</Label>
                                 <Input
                                     id="username"
-                                    name="username"
                                     type="text"
                                     placeholder="Enter username"
                                     value={formData.username}
@@ -86,7 +77,6 @@ export default function AdminUserForm() {
                                 <Label htmlFor="email">Email Address</Label>
                                 <Input
                                     id="email"
-                                    name="email"
                                     type="email"
                                     placeholder="user@example.com"
                                     value={formData.email}
@@ -101,7 +91,6 @@ export default function AdminUserForm() {
                             <div className="relative">
                                 <Input
                                     id="password"
-                                    name="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter secure password"
                                     value={formData.password}
@@ -127,7 +116,7 @@ export default function AdminUserForm() {
 
                         <div className="space-y-2 w-full">
                             <Label htmlFor="role">User Role</Label>
-                            <Select value={formData.role} onValueChange={(value) => handleInputChange("role", value)} name="role">
+                            <Select value={formData.role} onValueChange={(value) => handleInputChange("role", value)}>
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Select user role" />
                                 </SelectTrigger>
