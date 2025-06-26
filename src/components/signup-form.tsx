@@ -8,12 +8,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { AtSign, Lock, User, CheckCircle2 } from "lucide-react"
+import { AtSign, Lock, User } from "lucide-react"
 import { signup } from "@/actions/auth"
 
 export function SignupForm() {
 
-    const [showPass, useShowPass] = useState<boolean>(false);
+    const [showPass, setShowPass] = useState<boolean>(false);
     const [state, action, pending] = useActionState(signup, undefined);
 
     return (
@@ -89,7 +89,7 @@ export function SignupForm() {
                                 </div>
                                 <Button
                                     variant={"outline"} className="px-2"
-                                    onClick={() => useShowPass(!showPass)}
+                                    onClick={() => setShowPass(!showPass)}
                                 >{showPass ? "Hide" : "Show"}</Button>
                                 {state?.errors?.password && (
                                     <div className="text-xs border p-2 bg-red-500/90">

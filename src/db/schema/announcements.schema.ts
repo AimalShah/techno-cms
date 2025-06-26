@@ -1,4 +1,4 @@
-import { pgTable, uuid,varchar,text,timestamp , foreignKey} from "drizzle-orm/pg-core";
+import { pgTable, uuid,varchar,text,timestamp } from "drizzle-orm/pg-core";
 import { users } from "./users.schema";
 
 export const announcements = pgTable('announcements', {

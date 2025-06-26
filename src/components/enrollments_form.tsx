@@ -135,7 +135,7 @@ export default function EnrollmentForm({ students, courses }: { students: Studen
                 } else {
                     showNotification('error', result.message);
                 }
-            } catch (error) {
+                    } catch (_err) {
                 showNotification('error', 'An unexpected error occurred. Please try again.');
             }
         });

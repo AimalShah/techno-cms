@@ -1,25 +1,20 @@
-import { count, eq } from 'drizzle-orm';
-import { instructors } from '../../schema';
-import { db } from '../..';
-
+import { db } from "@/db";
+import { instructors } from "@/db/schema/instructors.schema";
+import { eq , count } from "drizzle-orm";
 
 export async function getAllInstructors() {
-  return await db.select().from(instructors);
+    const data = await db.query.instructors.findMany();
+    return data;
 }
 
-export async function getInstructorCount(){
-    const total = await db.select({count : count()}).from(instructors);
-    return total[0].count;
+export async function getInstructorCount() {
+    const data = await db.select({count : count()}).from(instructors);
+    return data[0].count;
 }
 
-export async function getInstructorById(instructorId: string) {
-  const result = await db.select().from(instructors).where(eq(instructors.instructorID, instructorId)).limit(1);
-  return result[0];
-}
-
-
-
-export async function getInstructorByEmail(email: string) {
-  const result = await db.select().from(instructors).where(eq(instructors.email, email)).limit(1);
-  return result[0];
+export async function getInstructorById(id: string) {
+    const data = await db.query.instructors.findFirst({
+        where: eq(instructors.instructorID, id),
+    });
+    return data;
 }

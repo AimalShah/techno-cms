@@ -48,7 +48,7 @@ export async function getEnrollmentsWithDetails(limit? : number) {
     .innerJoin(instructors, eq(offeringCourses.instructorID, instructors.instructorID));
   
   if(limit && limit > 0){
-    query = (query as any).limit(limit);
+    query = query.limit(limit);
   }
 
   return await query;

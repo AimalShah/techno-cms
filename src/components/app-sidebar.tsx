@@ -3,7 +3,7 @@
 import * as React from "react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
+
 import { NavUser } from "@/components/nav-user"
 
 import {
@@ -18,24 +18,29 @@ import {
 } from "@/components/ui/sidebar"
 import {
   IconDashboard,
-  IconChecklist,
-  IconChartBar,
-  IconFolder,
-  IconSettings,
   IconUsers,
-  IconClipboard,
+  IconChalkboard,
+  IconBook2,
+  IconUserPlus,
+  IconUserCog,
+  IconClipboardList,
+  IconClipboardCheck,
   IconInnerShadowTop,
+  IconSettings,
 } from '@tabler/icons-react';
 
 export const iconMap = {
-  dashboard: IconDashboard,
-  checklist: IconChecklist,
-  chart: IconChartBar,
-  folder: IconFolder,
-  settings: IconSettings,
-  users: IconUsers,
-  clipboard : IconClipboard,
+  dashboard: IconDashboard,         // Dashboard overview
+  students: IconUsers,              // Group of users → students
+  instructors: IconChalkboard,      // Teachers/instructors board
+  courses: IconBook2,               // Courses → books
+  enrollments: IconUserPlus,        // Adding users to something
+  users: IconUserCog,               // Managing system users
+  exams: IconClipboardList,         // Exam paper or checklist
+  results: IconClipboardCheck,      // Checked/graded results
+  settings: IconSettings
 };
+
 
 export type SidebarDataProps = {
   navMain: {

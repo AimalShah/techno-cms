@@ -10,7 +10,7 @@ type User = {
     role : "student" | "instructor" | "admin" | null;
 }
 
-function canSeeUsername(viewer : User | null){
+function canSeeUsername(){
     return true
 }
 

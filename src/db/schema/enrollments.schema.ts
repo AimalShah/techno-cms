@@ -23,7 +23,7 @@ export const enrollments = pgTable("enrollments" , {
                 }),
     startDate : date("start_date").notNull(),
     endDate : date("end_date").notNull(),
-}, (table) => [
+}, () => [
     check("valid_date_range", sql`start_date < end_date`)
 ]);
 

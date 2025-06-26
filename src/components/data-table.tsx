@@ -1,57 +1,36 @@
-"use client"
-
-import {
-    ColumnDef,
-    flexRender,
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
-    getCoreRowModel,
-    getPaginationRowModel,
-    getFilteredRowModel,
-    getSortedRowModel,
-    useReactTable
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow
-} from "./ui/table";
-import {
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenu,
-    DropdownMenuTrigger
-} from "./ui/dropdown-menu";
-
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { ArrowBigDownDash, ArrowDown, MoveLeft, MoveRight } from "lucide-react";
+"use client";
 
 import React from "react";
+import { 
+    ColumnDef, 
+    flexRender, 
+    getCoreRowModel, 
+    useReactTable, 
+    getPaginationRowModel, 
+    SortingState, 
+    getSortedRowModel, 
+    ColumnFiltersState, 
+    getFilteredRowModel, 
+    VisibilityState
+} from "@tanstack/react-table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { ArrowDown, MoveLeft, MoveRight } from "lucide-react";
+import { AddStudentDialog } from "@/app/(dashboards)/admin-dashboard/(tabs)/students/add-student-dialog";
 
 interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    columns: ColumnDef<TData, TValue>[];
+    data: TData[];
+    searchKey: string;
 }
 
-interface DataTablePropsExtended<TData, TValue> extends DataTableProps<TData, TValue> {
-    searchBy: string;
-}
-
-export default function DataTable<TData, TValue>({
-    columns,
-    data,
-    searchBy,
-}: DataTablePropsExtended<TData, TValue>) {
-
+export function DataTable<TData, TValue>({ columns, data, searchKey }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-    const [rowSelection, setRowSelection] = React.useState({})
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+    const [rowSelection, setRowSelection] = React.useState({});
 
     const table = useReactTable({
         data,
@@ -68,54 +47,49 @@ export default function DataTable<TData, TValue>({
             sorting,
             columnFilters,
             columnVisibility,
-            rowSelection
-        }
+            rowSelection,
+        },
     });
 
     return (
         <div>
             <div className="mb-5 flex items-center gap-2">
                 <Input
-                    placeholder={searchBy === "studentFirstName"
-                        ? "Search by First Name" : `Search by ${searchBy}`}
-                    value={(table.getColumn(searchBy)?.getFilterValue() as string) ?? ""}
+                    placeholder={`Search by ${searchKey}...`}
+                    value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn(searchBy)?.setFilterValue(event.target.value)
+                        table.getColumn(searchKey)?.setFilterValue(event.target.value)
                     }
                     className="max-w-xs"
                 />
-
-                <div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant={"outline"} className="ml-auto">
-                                Columns
-                                <ArrowDown />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            {table
-                                .getAllColumns()
-                                .filter(
-                                    (column) => column.getCanHide()
-                                ).map((column) => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className="capitilize"
-                                            checked={column.getIsVisible()}
-                                            onCheckedChange={(value) =>
-                                                column.toggleVisibility(!!value)
-                                            }
-                                        >
-                                            {column.id}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })
-                            }
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                {/* <AddStudentDialog /> */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant={"outline"} className="ml-auto">
+                            Columns
+                            <ArrowDown />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => {
+                                return (
+                                    <DropdownMenuCheckboxItem
+                                        key={column.id}
+                                        className="capitalize"
+                                        checked={column.getIsVisible()}
+                                        onCheckedChange={(value) =>
+                                            column.toggleVisibility(!!value)
+                                        }
+                                    >
+                                        {column.id}
+                                    </DropdownMenuCheckboxItem>
+                                );
+                            })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
             <div className="rounded-md border">
                 <Table>
@@ -184,8 +158,7 @@ export default function DataTable<TData, TValue>({
                 </Button>
             </div>
         </div>
-
-    )
+    );
 }
 
 

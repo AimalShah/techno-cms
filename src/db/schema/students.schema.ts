@@ -1,4 +1,4 @@
-import { PgTable , varchar, uuid, date, pgTable } from "drizzle-orm/pg-core";
+import { varchar, uuid, date, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema,  createSelectSchema } from "drizzle-zod"; 
 import * as zod from "zod";  
 
@@ -16,8 +16,7 @@ export const students = pgTable("students" , {
 export const SchemaStudent = createSelectSchema(students);
 export const SchemaStudentList = zod.array(SchemaStudent);
 export const SchemaStudentEdit = createInsertSchema(students, {
-    studentID : (schema) => 
-        schema.uuid().nonempty(),
+    studentID : zod.string().uuid(),
     firstName : (schema) => 
         schema
         .min(1 , {message : "First Name can not be empty"})
@@ -39,8 +38,7 @@ export const SchemaStudentEdit = createInsertSchema(students, {
             .min(4 , "address can not be less than 4 characters"),
 });
 export const SchemaStudentNew = createInsertSchema(students, {
-    studentID : (schema) => 
-            schema.uuid().nonempty(),
+    studentID : zod.string().uuid(),
     firstName : (schema) => 
         schema
         .min(1 , {message : "First Name can not be empty"})

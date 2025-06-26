@@ -8,7 +8,7 @@ import { sessions } from '@/db/schema/sessions.schema';
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
-export async function encrypt(payload : any){
+export async function encrypt(payload : { sessionId: string, userId: string, expiresAt: Date }){
     console.log(payload);
     return new SignJWT(payload)
         .setProtectedHeader({alg : 'HS256'})

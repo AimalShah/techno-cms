@@ -37,7 +37,7 @@ export default async function Page() {
       <div className="px-6 py-2 space-y-2">
         <h1 className="text-4xl font-semibold">Welcome Back, Admin</h1>
         <div className="flex justify-between flex-wrap gap-4">
-          <p className="text-lg text-gray-500">Here's what's happening at your school today.</p>
+          <p className="text-lg text-gray-500">Here&apos;s what&apos;s happening at your school today.</p>
           <AnnouncementDialog />
         </div>
       </div>

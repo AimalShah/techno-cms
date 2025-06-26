@@ -1,5 +1,5 @@
 import {pgTable , uuid , real} from "drizzle-orm/pg-core";
-import * as zod from "zod";
+
 import { courses } from "./courses.schema";
 import { instructors } from "./instructors.schema";
 

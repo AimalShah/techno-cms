@@ -3,12 +3,12 @@ import { students } from "../../schema";
 import { SQL, Placeholder } from "drizzle-orm";
 
 type StudentInput = {
-    firstName: string | SQL<unknown> | Placeholder<string, any>;
-    lastName: string | SQL<unknown> | Placeholder<string, any>;
-    email: string | SQL<unknown> | Placeholder<string, any>;
-    rollNumber: string | SQL<unknown> | Placeholder<string, any>;
-    phone: string | SQL<unknown> | Placeholder<string, any>;
-    address: string | SQL<unknown> | Placeholder<string, any>;
+    firstName: string;
+    lastName: string;
+    email: string;
+    rollNumber: string;
+    phone: string;
+    address: string;
     dateOfBirth: Date;
 }
 

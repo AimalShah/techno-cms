@@ -2,55 +2,56 @@
 
 import { db } from "@/db";
 import { announcements } from "@/db/schema/announcements.schema";
-import { getUser, verifySession } from "@/lib/dal";
-import { AnnouncementFormSchema, AnnouncementFormState } from "@/lib/definitions";
+import { getUser } from "@/lib/dal";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
+export async function createAnnouncement(prevState: any, formData: FormData) {
+    const user = await getUser();
+    try {
+        const title = formData.get("title") as string;
+        const content = formData.get("content") as string;
 
-export async function createAnnouncement(state : any, formData : FormData ){
+        await db.insert(announcements).values({
+            title,
+            content,
+            postedByUserId : user?.id as string,
+        });
 
-    const sesssion = await verifySession();
-
-    if(!sesssion) {
-        return {
-            error : true,
-            message : "Can not create Announcement"
-        }
+        revalidatePath("/admin-dashboard/announcements");
+        return { error: false, message: "Announcement created successfully!" };
+    } catch (error: any) {
+        return { error: true, message: `Failed to create announcement: ${error.message}` };
     }
+}
 
+export async function updateAnnouncement(prevState: any, formData: FormData) {
+    try {
+        const announcementId = formData.get("announcementId") as string;
+        const title = formData.get("title") as string;
+        const content = formData.get("content") as string;
 
+        await db.update(announcements).set({
+            title,
+            content,
+        }).where(eq(announcements.announcementId, announcementId));
 
-    const validateField = AnnouncementFormSchema.safeParse({
-        title : formData.get("title"),
-        content : formData.get("content")
-    });
-
-    if(!validateField.success){
-        return {
-            errors : validateField.error.flatten().fieldErrors
-        }
-    };
-
-    const {title , content} = validateField.data;
-
-   const res  =  await db.insert(announcements).values({
-        title : title,
-        content : content,
-        postedByUserId : sesssion.userId as string,
-    });
-
-    if(!res) {
-        return {
-            error : true,
-            message : "Error Occured Try Again"
-        }
+        revalidatePath("/admin-dashboard/announcements");
+        return { error: false, message: "Announcement updated successfully!" };
+    } catch (error: any) {
+        return { error: true, message: `Failed to update announcement: ${error.message}` };
     }
+}
 
-    revalidatePath("/admin-dashboard/");
-    return {
-        error : false,
-        success : true,
-        message : "Announcement Create Successfully"
+export async function deleteAnnouncement(prevState: any, formData: FormData) {
+    try {
+        const announcementId = formData.get("announcementId") as string;
+
+        await db.delete(announcements).where(eq(announcements.announcementId, announcementId));
+
+        revalidatePath("/admin-dashboard/announcements");
+        return { error: false, message: "Announcement deleted successfully!" };
+    } catch (error: any) {
+        return { error: true, message: `Failed to delete announcement: ${error.message}` };
     }
-
 }

@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  IconCreditCard,
-  IconDotsVertical,
-  IconLogout,
-  IconNotification,
-  IconUserCircle,
-} from "@tabler/icons-react"
+
 
 import {
   Avatar,
@@ -16,12 +10,11 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -30,6 +23,8 @@ import {
 } from "@/components/ui/sidebar"
 import SidebarLogoutBtn from "./sidebar-logout-btn"
 import { ThemeToggle } from "./theme-toggle"
+import { IconDotsVertical } from "@tabler/icons-react";
+
 
 export function   NavUser({
   user,
