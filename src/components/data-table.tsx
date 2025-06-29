@@ -18,7 +18,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { ArrowDown, MoveLeft, MoveRight } from "lucide-react";
-import { AddStudentDialog } from "@/app/(dashboards)/admin-dashboard/(tabs)/students/add-student-dialog";
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];

@@ -5,9 +5,7 @@ import { Button } from "@/components/ui/button";
 import { 
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -20,8 +18,7 @@ export const columns: ColumnDef<Test>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => {
-      const test = row.original;
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

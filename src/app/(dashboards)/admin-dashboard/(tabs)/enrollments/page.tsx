@@ -25,7 +25,7 @@ async function SearchSection() {
         <div className="p-2 border rounded-lg">
             <h1 className="text-4xl mb-6">Search Enrollments</h1>
             {
-                //@ts-ignore
+                // @ts-expect-error: This is a temporary workaround for a type mismatch with the DataTable component.
                 <DataTable data={data} columns={enrllmentColumns} searchBy="studentFirstName"/>
             }
         </div>

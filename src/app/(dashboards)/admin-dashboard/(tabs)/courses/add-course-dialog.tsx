@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogT
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createCourse } from "@/actions/courses";
-import { useFormState, useFormStatus } from "react-dom";
+
 import { toast } from "sonner";
 
 export function AddCourseDialog() {

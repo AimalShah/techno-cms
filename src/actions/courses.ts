@@ -5,7 +5,7 @@ import { courses } from "@/db/schema/courses.schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-export async function createCourse(prevState: any, formData: FormData) {
+export async function createCourse(prevState: unknown, formData: FormData) {
     try {
         const courseName = formData.get("courseName") as string;
         const duration = parseInt(formData.get("duration") as string);
@@ -17,12 +17,12 @@ export async function createCourse(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/courses");
         return { error: false, message: "Course created successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to create course: ${error.message}` };
     }
 }
 
-export async function updateCourse(prevState: any, formData: FormData) {
+export async function updateCourse(prevState: unknown, formData: FormData) {
     try {
         const courseID = formData.get("courseID") as string;
         const courseName = formData.get("courseName") as string;
@@ -35,12 +35,12 @@ export async function updateCourse(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/courses");
         return { error: false, message: "Course updated successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to update course: ${error.message}` };
     }
 }
 
-export async function deleteCourse(prevState: any, formData: FormData) {
+export async function deleteCourse(prevState: unknown, formData: FormData) {
     try {
         const courseId = formData.get("courseId") as string;
 
@@ -48,7 +48,7 @@ export async function deleteCourse(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/courses");
         return { error: false, message: "Course deleted successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to delete course: ${error.message}` };
     }
 }

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { deleteAttendance } from "@/actions/attendance";
-import { useFormState, useFormStatus } => "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 

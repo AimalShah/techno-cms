@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 // Create Student
-export async function createStudent(state : any , formData: FormData) {
+export async function createStudent(state : unknown , formData: FormData) {
   const email = formData.get("email") as string;
   // Only allow emails of users with role 'student'
   const user = await db.select().from(users).where(eq(users.email, email)).limit(1);
@@ -36,7 +36,7 @@ export async function createStudent(state : any , formData: FormData) {
     await db.insert(students).values(validatedFields.data);
     revalidatePath("/admin-dashboard/students");
     return { message: "Student created successfully." };
-  } catch (error: any) {
+  } catch {
     return { message: "Database Error: Failed to Create Student." };
   }
 }
@@ -72,7 +72,7 @@ export async function updateStudent(id: string, formData: FormData) {
     await db.update(students).set(validatedFields.data).where(eq(students.studentID, id));
     revalidatePath("/admin-dashboard/students");
     return { message: "Student updated successfully." };
-  } catch (error: any) {
+  } catch {
     return { message: "Database Error: Failed to Update Student." };
   }
 }
@@ -83,7 +83,7 @@ export async function deleteStudent(id: string) {
     await db.delete(students).where(eq(students.studentID, id));
     revalidatePath("/admin-dashboard/students");
     return { message: "Student deleted successfully." };
-  } catch (error) {
+  } catch {
     return { message: "Database Error: Failed to Delete Student." };
   }
 }

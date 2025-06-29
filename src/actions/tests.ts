@@ -5,7 +5,7 @@ import { tests } from "@/db/schema/tests.schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-export async function createTest(prevState: any, formData: FormData) {
+export async function createTest(prevState: unknown, formData: FormData) {
     try {
         const title = formData.get("title") as string;
         const date = new Date(formData.get("date") as string);
@@ -19,12 +19,12 @@ export async function createTest(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/tests");
         return { error: false, message: "Test created successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to create test: ${error.message}` };
     }
 }
 
-export async function updateTest(prevState: any, formData: FormData) {
+export async function updateTest(prevState: unknown, formData: FormData) {
     try {
         const testId = formData.get("testId") as string;
         const title = formData.get("title") as string;
@@ -39,12 +39,12 @@ export async function updateTest(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/tests");
         return { error: false, message: "Test updated successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to update test: ${error.message}` };
     }
 }
 
-export async function deleteTest(prevState: any, formData: FormData) {
+export async function deleteTest(prevState: unknown, formData: FormData) {
     try {
         const testId = formData.get("testId") as string;
 
@@ -52,7 +52,7 @@ export async function deleteTest(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/tests");
         return { error: false, message: "Test deleted successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to delete test: ${error.message}` };
     }
 }

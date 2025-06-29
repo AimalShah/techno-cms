@@ -1,6 +1,6 @@
 import { db } from "../..";
 import { students } from "../../schema";
-import { SQL, Placeholder } from "drizzle-orm";
+
 
 type StudentInput = {
     firstName: string;

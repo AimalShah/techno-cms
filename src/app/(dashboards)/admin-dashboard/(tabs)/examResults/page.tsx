@@ -6,7 +6,7 @@ import LoadingSkeleton from "@/components/loading-skeleton";
 import { AddExamResultDialog } from "./add-exam-result-dialog";
 
 
-export type ExamResult {
+export type ExamResult = {
     examResultId: string;
     examId: string;
     studentId: string;

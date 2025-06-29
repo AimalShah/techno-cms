@@ -6,7 +6,7 @@ import { getUser } from "@/lib/dal";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-export async function createAnnouncement(prevState: any, formData: FormData) {
+export async function createAnnouncement(prevState: unknown, formData: FormData) {
     const user = await getUser();
     try {
         const title = formData.get("title") as string;
@@ -20,12 +20,12 @@ export async function createAnnouncement(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/announcements");
         return { error: false, message: "Announcement created successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to create announcement: ${error.message}` };
     }
 }
 
-export async function updateAnnouncement(prevState: any, formData: FormData) {
+export async function updateAnnouncement(prevState: unknown, formData: FormData) {
     try {
         const announcementId = formData.get("announcementId") as string;
         const title = formData.get("title") as string;
@@ -38,12 +38,12 @@ export async function updateAnnouncement(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/announcements");
         return { error: false, message: "Announcement updated successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to update announcement: ${error.message}` };
     }
 }
 
-export async function deleteAnnouncement(prevState: any, formData: FormData) {
+export async function deleteAnnouncement(prevState: unknown, formData: FormData) {
     try {
         const announcementId = formData.get("announcementId") as string;
 
@@ -51,7 +51,7 @@ export async function deleteAnnouncement(prevState: any, formData: FormData) {
 
         revalidatePath("/admin-dashboard/announcements");
         return { error: false, message: "Announcement deleted successfully!" };
-    } catch (error: any) {
+    } catch (error: unknown) {
         return { error: true, message: `Failed to delete announcement: ${error.message}` };
     }
 }

@@ -19,7 +19,7 @@ export default function UserManagement({ data }: {
                 <TabsContent value="manage-users">
                     <div>
                     <h1 className="text-4xl mb-6">Manage Users</h1>
-                        {//@ts-ignore
+                        {// @ts-expect-error: This is a temporary workaround for a type mismatch with the DataTable component.
                         <DataTable data={data} columns={userColumns} searchBy="username" />
                         }
                     </div>

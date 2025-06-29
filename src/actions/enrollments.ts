@@ -1,11 +1,26 @@
-"use server"
 
+"use server";
 
 import { db } from "@/db";
-import { enrollments, offeringCourses, students } from "@/db/schema";
+import { enrollments, students, offeringCourses } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+
+export async function getEnrolledStudents(offeringId: string) {
+    const enrolledStudents = await db
+        .select({
+            enrollmentID: enrollments.enrollmentID,
+            studentID: students.studentID,
+            firstName: students.firstName,
+            lastName: students.lastName,
+        })
+        .from(enrollments)
+        .innerJoin(students, eq(enrollments.studentID, students.studentID))
+        .where(eq(enrollments.offeringID, offeringId));
+
+    return enrolledStudents;
+}
 
 const enrollmentSchema = z.object({
   studentId: z.string().uuid("Invalid student ID format"),
