@@ -19,6 +19,10 @@ export async function getEnrolledStudents(offeringId: string) {
         .innerJoin(students, eq(enrollments.studentID, students.studentID))
         .where(eq(enrollments.offeringID, offeringId));
 
+        if(!enrolledStudents){
+          console.log("No Stundets");
+        }
+
     return enrolledStudents;
 }
 

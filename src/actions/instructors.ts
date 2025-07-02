@@ -9,6 +9,7 @@ import { revalidatePath } from "next/cache";
 
 export async function getInstructorCourses() {
     const user = await getUser();
+    console.log(user);
     if (!user || user.role !== "instructor") {
         throw new Error("Unauthorized");
     }

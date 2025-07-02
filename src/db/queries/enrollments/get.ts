@@ -22,6 +22,19 @@ export async function getEnrollmentById(enrollmentId: string) {
   return result[0];
 }
 
+export async function getEnrollmentForSpecificCourse(id : string){
+   const data = await db.select({
+    studentFirstName: students.firstName,
+    studentLastName: students.lastName,
+    courseName: courses.courseName,
+  })
+    .from(enrollments)
+    .innerJoin(students, eq(enrollments.studentID, students.studentID))
+    .where(eq(enrollments.offeringID, id));
+    
+
+    return data;
+}
 export async function getEnrollmentsByStudentId(studentId: string) {
   return await db.select().from(enrollments).where(eq(enrollments.studentID, studentId));
 }

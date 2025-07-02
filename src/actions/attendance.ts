@@ -22,14 +22,15 @@ export async function createBulkAttendance(prevState: unknown, formData: FormDat
         revalidatePath("/instructor-dashboard/attendance");
         return { error: false, message: "Attendance created successfully!" };
     } catch (error: unknown) {
+        //@ts-ignore
         return { error: true, message: `Failed to create attendance: ${error.message}` };
     }
 }
 
-export async function createAttendance(prevState: unknown, formData: FormData) {
+export async function createAttendance(formData: FormData) {
     try {
         const enrollmentId = formData.get("enrollmentId") as string;
-        const date = new Date(formData.get("date") as string);
+        const date = new Date();
         const status = formData.get("status") as "Present" | "Absent" | "Excused";
 
         await db.insert(attendance).values({
@@ -41,6 +42,7 @@ export async function createAttendance(prevState: unknown, formData: FormData) {
         revalidatePath("/admin-dashboard/attendance");
         return { error: false, message: "Attendance created successfully!" };
     } catch (error: unknown) {
+        //@ts-ignore
         return { error: true, message: `Failed to create attendance: ${error.message}` };
     }
 }
@@ -61,6 +63,7 @@ export async function updateAttendance(prevState: unknown, formData: FormData) {
         revalidatePath("/admin-dashboard/attendance");
         return { error: false, message: "Attendance updated successfully!" };
     } catch (error: unknown) {
+        //@ts-ignore
         return { error: true, message: `Failed to update attendance: ${error.message}` };
     }
 }
@@ -74,6 +77,7 @@ export async function deleteAttendance(prevState: unknown, formData: FormData) {
         revalidatePath("/admin-dashboard/attendance");
         return { error: false, message: "Attendance deleted successfully!" };
     } catch (error: unknown) {
+        //@ts-ignore
         return { error: true, message: `Failed to delete attendance: ${error.message}` };
     }
 }

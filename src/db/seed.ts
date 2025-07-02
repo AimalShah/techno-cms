@@ -1,9 +1,9 @@
-import {seed} from "drizzle-seed";
-import { db } from "./index";
-import * as schema from "@/db/schema"
+import { resetDatabase } from "./reset";
+import { generateMockData } from "./mock-data";
 
 async function main(){
-    await seed(db , schema, {count : 400});
+    await resetDatabase();
+    await generateMockData();
 }
 
 main();

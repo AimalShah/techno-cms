@@ -1,7 +1,7 @@
 
 import { getInstructorCourses } from "@/actions/instructors";
 import { DataTable } from "@/components/data-table";
-import { ColumnDef } from "@radix-ui/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 
 export default async function CoursesPage() {
     const courses = await getInstructorCourses();
@@ -24,7 +24,7 @@ export default async function CoursesPage() {
     return (
         <div>
             <h1 className="text-2xl font-bold">My Courses</h1>
-            <DataTable columns={columns} data={courses} />
+            <DataTable columns={columns} data={courses} searchKey="courseName" />
         </div>
     );
 }
