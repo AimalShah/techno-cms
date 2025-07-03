@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { createCourse } from "@/actions/courses";
 
 import { toast } from "sonner";
+import { useFormStatus } from "react-dom";
 
 export function AddCourseDialog() {
     const [state, formAction] = useActionState(createCourse, {

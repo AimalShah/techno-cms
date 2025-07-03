@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { createInstructor } from "@/actions/instructors";
 
 import { toast } from "sonner";
+import { useFormStatus } from "react-dom";
 
 export function AddInstructorDialog() {
     const [state, formAction] = useActionState(createInstructor, {
