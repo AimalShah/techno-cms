@@ -25,7 +25,7 @@ export async function getResultsForCourse(offeringId: string) {
     return courseResults;
 }
 
-export async function createResult(formData: FormData) {
+export async function createResult(prevState : any , formData: FormData) {
     try {
         const enrollmentId = formData.get("enrollmentId") as string;
         const marksObtained = parseFloat(formData.get("marksObtained") as string);
@@ -42,6 +42,7 @@ export async function createResult(formData: FormData) {
         revalidatePath("/instructor-dashboard/results");
         return { error: false, message: "Result created successfully!" };
     } catch (error: unknown) {
+        //@ts-ignore
         return { error: true, message: `Failed to create result: ${error.message}` };
     }
 }
@@ -62,6 +63,7 @@ export async function updateResult(formData: FormData) {
         revalidatePath("/instructor-dashboard/results");
         return { error: false, message: "Result updated successfully!" };
     } catch (error: unknown) {
+        //@ts-ignore
         return { error: true, message: `Failed to update result: ${error.message}` };
     }
 }
@@ -75,6 +77,7 @@ export async function deleteResult(prevState: unknown, formData: FormData) {
         revalidatePath("/instructor-dashboard/results");
         return { error: false, message: "Result deleted successfully!" };
     } catch (error: unknown) {
+        //@ts-ignore
         return { error: true, message: `Failed to delete result: ${error.message}` };
     }
 }

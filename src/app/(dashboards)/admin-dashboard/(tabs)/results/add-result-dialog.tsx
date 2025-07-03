@@ -1,15 +1,15 @@
 "use client";
-import React from "react";
+import React, { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createResult } from "@/actions/results";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 
 export function AddResultDialog() {
-    const [state, formAction] = useFormState(createResult, {
+    const [state, formAction] = useActionState(createResult, {
         error: false,
         message: "",
     });

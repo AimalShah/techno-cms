@@ -1,15 +1,15 @@
 "use client";
-import React from "react";
+import React, { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createOfferingCourse } from "@/actions/offeringCourses";
-import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
+import { useFormStatus } from "react-dom";
 
 export function AddOfferingCourseDialog() {
-    const [state, formAction] = useFormState(createOfferingCourse, {
+    const [state, formAction] = useActionState(createOfferingCourse, {
         error: false,
         message: "",
     });
